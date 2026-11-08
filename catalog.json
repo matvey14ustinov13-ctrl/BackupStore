@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-08T13:07:29Z",
+  "generated_at": "2026-11-08T13:08:15Z",
   "apps": [
     {
       "name": "RecoverX",
@@ -16,7 +16,7 @@
       "latest_release": {
         "tag_name": "v3.0.0",
         "name": "RecoverV3.0.0",
-        "body": "EN\r\nNo longer supported\r\nRU\r\nПоддержка окончена.",
+        "body": "EN\r\nProgram support has ended.\r\n\r\nRU\r\nПоддержка программы завершена.\r\n\r\nSource code: https://github.com/matvey14ustinov13-ctrl/RecoverX\r\nLicense: GPL v3",
         "published_at": "2026-11-08T07:17:52Z",
         "html_url": "https://github.com/matvey14ustinov13-ctrl/RecoverX/releases/tag/v3.0.0",
         "prerelease": false,
