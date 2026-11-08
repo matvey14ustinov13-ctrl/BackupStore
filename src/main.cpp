@@ -772,6 +772,15 @@ int WINAPI wWinMain(HINSTANCE instance, HINSTANCE, PWSTR, int showCommand) {
 
     int width = 1180;
     int height = 780;
+    HDC screenDc = GetDC(nullptr);
+    if (screenDc) {
+        int dpi = GetDeviceCaps(screenDc, LOGPIXELSY);
+        ReleaseDC(nullptr, screenDc);
+        if (dpi > 0) {
+            width = MulDiv(width, dpi, 96);
+            height = MulDiv(height, dpi, 96);
+        }
+    }
     int screenWidth = GetSystemMetrics(SM_CXSCREEN);
     int screenHeight = GetSystemMetrics(SM_CYSCREEN);
     int x = (screenWidth - width) / 2;

@@ -484,7 +484,7 @@ void DrawHeader(AppState& state, HDC dc, const RECT& client) {
 void DrawSidebar(AppState& state, HDC dc, const RECT& client) {
     int top = Scale(state, 72);
     int bottom = client.bottom - Scale(state, 30);
-    int width = Scale(state, 208);
+    int width = Scale(state, 220);
     RECT sidebar{ 0, top, width, bottom };
     FillRectColor(dc, sidebar, kSidebar);
     Line(dc, width - 1, top, width - 1, bottom, kBorder);
@@ -575,9 +575,9 @@ void DrawStatusBar(AppState& state, HDC dc, const RECT& client) {
                  DT_RIGHT | DT_VCENTER | DT_SINGLELINE);
 
     if ((state.installing || state.selfUpdating) && state.installPercent >= 0) {
-        int width = (client.right - Scale(state, 208)) * state.installPercent / 100;
-        RECT progress{ Scale(state, 208), client.bottom - Scale(state, 2),
-                       Scale(state, 208) + width, client.bottom };
+        int width = (client.right - Scale(state, 220)) * state.installPercent / 100;
+        RECT progress{ Scale(state, 220), client.bottom - Scale(state, 2),
+                       Scale(state, 220) + width, client.bottom };
         FillRectColor(dc, progress, kAccent);
     }
 }
@@ -608,7 +608,7 @@ std::vector<AppInfo> FilteredApps(const AppState& state) {
 }
 
 void DrawContentHeader(AppState& state, HDC dc, const RECT& client, int& dividerY) {
-    int left = Scale(state, 208) + Scale(state, 26);
+    int left = Scale(state, 220) + Scale(state, 26);
     int right = client.right - Scale(state, 26);
     int top = Scale(state, 72) + Scale(state, 24);
 
@@ -679,7 +679,7 @@ void DrawContentHeader(AppState& state, HDC dc, const RECT& client, int& divider
 
 void DrawCatalog(AppState& state, HDC dc, const RECT& client, int top, int bottom) {
     std::vector<AppInfo> apps = FilteredApps(state);
-    int left = Scale(state, 208) + Scale(state, 26);
+    int left = Scale(state, 220) + Scale(state, 26);
     int right = client.right - Scale(state, 26) - Scale(state, 10);
     int cardHeight = Scale(state, 148);
     int gap = Scale(state, 12);
@@ -776,7 +776,7 @@ void DrawCatalog(AppState& state, HDC dc, const RECT& client, int top, int botto
 }
 
 void DrawInstalled(AppState& state, HDC dc, const RECT& client, int top, int bottom) {
-    int left = Scale(state, 208) + Scale(state, 26);
+    int left = Scale(state, 220) + Scale(state, 26);
     int right = client.right - Scale(state, 26) - Scale(state, 10);
     int cardHeight = Scale(state, 148);
     int gap = Scale(state, 12);
@@ -847,7 +847,7 @@ void DrawInstalled(AppState& state, HDC dc, const RECT& client, int top, int bot
 }
 
 void DrawUpdates(AppState& state, HDC dc, const RECT& client, int top, int bottom) {
-    int left = Scale(state, 208) + Scale(state, 26);
+    int left = Scale(state, 220) + Scale(state, 26);
     int right = client.right - Scale(state, 26) - Scale(state, 10);
     int cardHeight = Scale(state, 148);
     int gap = Scale(state, 12);
@@ -964,7 +964,7 @@ void DrawSettingsRow(AppState& state,
 }
 
 void DrawSettings(AppState& state, HDC dc, const RECT& client, int top, int bottom) {
-    int left = Scale(state, 208) + Scale(state, 26);
+    int left = Scale(state, 220) + Scale(state, 26);
     int right = client.right - Scale(state, 26) - Scale(state, 10);
     int vy = top;
     int y = vy - state.scroll;
@@ -1156,7 +1156,7 @@ void PaintUi(AppState& state, HDC dc, const RECT& client) {
     DrawContentHeader(state, memory, client, dividerY);
     int contentTop = dividerY + Scale(state, 16);
     int contentBottom = height - Scale(state, 30) - Scale(state, 12);
-    state.contentRect = RECT{ Scale(state, 208) + Scale(state, 26), contentTop,
+    state.contentRect = RECT{ Scale(state, 220) + Scale(state, 26), contentTop,
                               width - Scale(state, 26) - Scale(state, 10), contentBottom };
 
     switch (state.view) {

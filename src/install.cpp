@@ -352,26 +352,44 @@ bool PrepareSelfUpdate(const ReleaseInfo& release, const InstallProgress& progre
     }
 
     std::wstring currentExe = util::ExePath();
-    std::wstring script = util::JoinPath(util::UpdateDir(), L"apply-update.cmd");
+    std::wstring script = util::JoinPath(util::UpdateDir(), L"apply-update.ps1");
 
-    std::wstringstream text;
-    text << L"@echo off\r\n";
-    text << L"set \"PID=" << GetCurrentProcessId() << L"\"\r\n";
-    text << L"for /l %%i in (1,1,120) do (\r\n";
-    text << L"  tasklist /FI \"PID eq %PID%\" /NH | find /I \"BackupStore.exe\" >nul\r\n";
-    text << L"  if errorlevel 1 goto replace\r\n";
-    text << L"  ping -n 2 127.0.0.1 >nul\r\n";
-    text << L")\r\n";
-    text << L":replace\r\n";
-    text << L"move /y \"" << currentExe << L"\" \"" << currentExe << L".old\" >nul 2>&1\r\n";
-    text << L"copy /y \"" << newExe << L"\" \"" << currentExe << L"\" >nul 2>&1\r\n";
-    text << L"if errorlevel 1 (\r\n";
-    text << L"  move /y \"" << currentExe << L".old\" \"" << currentExe << L"\" >nul 2>&1\r\n";
-    text << L"  exit /b 1\r\n";
-    text << L")\r\n";
-    text << L"del \"" << currentExe << L".old\" >nul 2>&1\r\n";
-    text << L"start \"\" \"" << currentExe << L"\"\r\n";
-    text << L"(goto) 2>nul & del \"%~f0\"\r\n";
+    // The script itself stays ASCII-only; paths are passed as Unicode arguments.
+    const wchar_t* scriptText =
+        L"param(\r\n"
+        L"    [Parameter(Mandatory=$true)][int]$TargetPid,\r\n"
+        L"    [Parameter(Mandatory=$true)][string]$CurrentExe,\r\n"
+        L"    [Parameter(Mandatory=$true)][string]$NewExe\r\n"
+        L")\r\n"
+        L"$ErrorActionPreference = 'Stop'\r\n"
+        L"$deadline = (Get-Date).AddMinutes(5)\r\n"
+        L"while ((Get-Date) -lt $deadline) {\r\n"
+        L"    $process = Get-Process -Id $TargetPid -ErrorAction SilentlyContinue\r\n"
+        L"    if (-not $process) { break }\r\n"
+        L"    Start-Sleep -Milliseconds 500\r\n"
+        L"}\r\n"
+        L"$old = $CurrentExe + '.old'\r\n"
+        L"$done = $false\r\n"
+        L"for ($attempt = 0; $attempt -lt 20 -and -not $done; $attempt++) {\r\n"
+        L"    try {\r\n"
+        L"        if (Test-Path -LiteralPath $old) { Remove-Item -LiteralPath $old -Force -ErrorAction SilentlyContinue }\r\n"
+        L"        Move-Item -LiteralPath $CurrentExe -Destination $old -Force -ErrorAction Stop\r\n"
+        L"        Copy-Item -LiteralPath $NewExe -Destination $CurrentExe -Force -ErrorAction Stop\r\n"
+        L"        Start-Process -FilePath $CurrentExe\r\n"
+        L"        $done = $true\r\n"
+        L"    } catch {\r\n"
+        L"        if (Test-Path -LiteralPath $old) {\r\n"
+        L"            Move-Item -LiteralPath $old -Destination $CurrentExe -Force -ErrorAction SilentlyContinue\r\n"
+        L"        }\r\n"
+        L"        Start-Sleep -Milliseconds 750\r\n"
+        L"    }\r\n"
+        L"}\r\n"
+        L"if ($done) {\r\n"
+        L"    Start-Sleep -Milliseconds 500\r\n"
+        L"    Remove-Item -LiteralPath $old -Force -ErrorAction SilentlyContinue\r\n"
+        L"    Remove-Item -LiteralPath $NewExe -Force -ErrorAction SilentlyContinue\r\n"
+        L"}\r\n"
+        L"Remove-Item -LiteralPath $PSCommandPath -Force -ErrorAction SilentlyContinue\r\n";
 
     {
         std::ofstream file(script, std::ios::binary | std::ios::trunc);
@@ -379,15 +397,26 @@ bool PrepareSelfUpdate(const ReleaseInfo& release, const InstallProgress& progre
             error = L"Не удалось создать сценарий обновления";
             return false;
         }
-        std::string utf8 = util::WideToUtf8(text.str());
+        std::string utf8 = util::WideToUtf8(scriptText);
         file.write(utf8.data(), static_cast<std::streamsize>(utf8.size()));
     }
 
-    wchar_t comSpec[MAX_PATH]{};
-    if (GetEnvironmentVariableW(L"ComSpec", comSpec, MAX_PATH) == 0) {
-        wcscpy_s(comSpec, L"cmd.exe");
+    std::wstring systemRoot;
+    wchar_t systemRootBuffer[MAX_PATH]{};
+    if (GetEnvironmentVariableW(L"SystemRoot", systemRootBuffer, MAX_PATH) > 0) {
+        systemRoot = systemRootBuffer;
     }
-    std::wstring command = std::wstring(L"\"") + comSpec + L"\" /c \"\"" + script + L"\"\"";
+    std::wstring powershell = systemRoot.empty()
+                                  ? L"powershell.exe"
+                                  : systemRoot + L"\\System32\\WindowsPowerShell\\v1.0\\powershell.exe";
+    if (!util::FileExists(powershell)) {
+        powershell = L"powershell.exe";
+    }
+
+    std::wstring command = L"\"" + powershell +
+                           L"\" -NoProfile -NonInteractive -ExecutionPolicy Bypass -WindowStyle Hidden -File \"" +
+                           script + L"\" -TargetPid " + std::to_wstring(GetCurrentProcessId()) +
+                           L" -CurrentExe \"" + currentExe + L"\" -NewExe \"" + newExe + L"\"";
 
     STARTUPINFOW startup{};
     startup.cb = sizeof(startup);
