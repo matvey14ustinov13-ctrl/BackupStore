@@ -1,0 +1,34 @@
+{
+  "generated_at": "2026-11-08T13:06:58Z",
+  "apps": [
+    {
+      "name": "RecoverX",
+      "full_name": "matvey14ustinov13-ctrl/RecoverX",
+      "description": "Portable Windows utility for system management, recovery and maintenance.",
+      "html_url": "https://github.com/matvey14ustinov13-ctrl/RecoverX",
+      "updated_at": "2026-11-08T07:13:13Z",
+      "stargazers_count": 0,
+      "archived": false,
+      "license": {
+        "spdx_id": "GPL-3.0"
+      },
+      "topics": [],
+      "latest_release": {
+        "tag_name": "v3.0.0",
+        "name": "RecoverV3.0.0",
+        "body": "EN\r\nNo longer supported\r\nRU\r\nПоддержка окончена.",
+        "published_at": "2026-11-08T07:17:52Z",
+        "html_url": "https://github.com/matvey14ustinov13-ctrl/RecoverX/releases/tag/v3.0.0",
+        "prerelease": false,
+        "assets": [
+          {
+            "name": "RecoverX-v3.0.0.zip",
+            "browser_download_url": "https://github.com/matvey14ustinov13-ctrl/RecoverX/releases/download/v3.0.0/RecoverX-v3.0.0.zip",
+            "content_type": "application/zip",
+            "size": 96648
+          }
+        ]
+      }
+    }
+  ]
+}
