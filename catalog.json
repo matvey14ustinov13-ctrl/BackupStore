@@ -1,6 +1,47 @@
 {
-  "generated_at": "2026-11-20T15:15:43Z",
+  "generated_at": "2026-11-20T23:54:29Z",
   "apps": [
+    {
+      "name": "backup-team.github.io",
+      "full_name": "matvey14ustinov13-ctrl/backup-team.github.io",
+      "description": "",
+      "html_url": "https://github.com/matvey14ustinov13-ctrl/backup-team.github.io",
+      "updated_at": "2026-11-20T18:18:10Z",
+      "stargazers_count": 0,
+      "archived": false,
+      "license": {
+        "spdx_id": ""
+      },
+      "topics": [],
+      "latest_release": {
+        "tag_name": "v1.0",
+        "name": "Zynx Linux 1.0",
+        "body": "## Zynx Linux 1.0\n\nAn Arch-based live medium with a **graphical installer written in C + GTK3** — no\nPython, no terminal, no network needed during installation. The installer copies\nthe running live system to the target disk, sets up GRUB for BIOS and UEFI and\nconfigures the new system in a chroot.\n\n### What's inside\n\n- **Editions:** XFCE Full, XFCE Minimal, Console.\n- **Login shell** for the new user: bash, zsh or fish.\n- **Separate `/home` partition**, configurable root size (default 40 GiB) and an\n  optional **swap file** (0 / 2 / 4 / 8 GiB).\n- **Formatting is OFF by default.** With formatting off the largest existing Linux\n  root filesystem is reused and `/home` is preserved; the installer always shows\n  the exact partition plan before writing anything.\n- **Make Zynx the default boot entry** switch (UEFI `BootOrder` via `efibootmgr`);\n  when it is off the firmware boot order is not touched.\n- **Magic SysRq (REISUB)** enabled on the live medium and in the installed system.\n- English interface and English installed system (`en_US.UTF-8`, keyboard `us`).\n- Priority fixes: `mkfs.ext4 -m 1`, `fstrim` of the target filesystems, install log\n  copied to `/var/log/zynx-install.log`, retry loop while waiting for partition\n  device nodes.\n- Minimum disk size 12 GiB (16 GiB recommended).\n\n### Download\n\nThe image is **2.42 GiB**, which is above GitHub's 2 GiB per-asset limit, so the\narchive is published as a **split ZIP**:\n\n```\nzynx-1.0-release.z01   1.27 GiB   first volume\nzynx-1.0-release.zip   1.14 GiB   last volume\n```\n\nDownload **both** files into the same folder, then:\n\n- **Windows:** open `zynx-1.0-release.zip` with 7-Zip or WinRAR (they read `.z01`\n  automatically) and extract.\n- **Linux / macOS:**\n  ```bash\n  zip -s 0 zynx-1.0-release.zip --out zynx-1.0-full.zip\n  unzip zynx-1.0-full.zip\n  ```\n\nThe archive contains the ISO, its `.sha256` checksum, `README.md` (full bilingual\nguide) and `INSTALL.txt` (quick guide).\n\n### Checksums\n\n```\nISO  d691c99c04514666980146d399a3f7ba6f1f27db79c18e48b8d172e573a75d69  zynx-2026.11.19-x86_64.iso\npart 96bad0d4c1e2cc6d09751b68096b1a31c6bd5d86ebf92b4fcde8561325500bbd  zynx-1.0-release.z01\npart f861b171008481d2e0b38c88d3cbd8be56bdd46bed161d7f3208d000cfe5b944  zynx-1.0-release.zip\n```\n\n### Requirements\n\n- x86_64, 2 GiB RAM, 12 GiB disk (16 GiB recommended).\n- UEFI or BIOS; **Secure Boot must be disabled** (the medium is not signed).\n- USB drive of 2 GB or more, or a virtual machine.\n\n### Quick start\n\n1. Verify and write the ISO (`dd` on Linux/macOS, Rufus in DD mode on Windows).\n2. Boot the medium, the live desktop logs in as `zynx`.\n3. Run **Install Zynx Linux** from the desktop.\n4. Choose edition, shell, disk, user account and settings; review the summary.\n5. Type the confirmation word, install, remove the medium and reboot.\n\nSource code: [`zynx/source`](https://github.com/matvey14ustinov13-ctrl/backup-team.github.io/tree/main/zynx/source) ·\nProject page: https://matvey14ustinov13-ctrl.github.io/backup-team.github.io/zynx/\n\nLicense: GPL v3 (Arch Linux packages and the Linux kernel keep their own licenses).\n\n---\n\n### Русский\n\n**Zynx Linux 1.0** — образ на базе Arch Linux с графическим установщиком на C + GTK3\n(без Python и терминала). Редакции XFCE Full / Minimal / Console, оболочки\nbash/zsh/fish, отдельный `/home`, swap-файл 0/2/4/8 ГиБ, форматирование по умолчанию\nвыключено, переключатель «сделать Zynx системой по умолчанию», включён SysRq (REISUB).\nИнтерфейс и система — на английском.\n\nОбраз весит 2.42 ГиБ, поэтому скачивание разбито на два тома ZIP:\n`zynx-1.0-release.z01` и `zynx-1.0-release.zip`. Скачайте **оба** файла в одну папку\nи распакуйте `.zip` через 7-Zip/WinRAR (или `zip -s 0 ... --out ...` в Linux/macOS).\nВнутри — ISO, контрольная сумма `.sha256`, `README.md` и `INSTALL.txt`.\n\nМинимум: 64-битный ПК, 2 ГиБ ОЗУ, 12 ГиБ на диске; Secure Boot должен быть отключён.\n",
+        "published_at": "2026-11-20T17:18:19Z",
+        "html_url": "https://github.com/matvey14ustinov13-ctrl/backup-team.github.io/releases/tag/v1.0",
+        "prerelease": false,
+        "assets": [
+          {
+            "name": "SHA256SUMS-parts.txt",
+            "browser_download_url": "https://github.com/matvey14ustinov13-ctrl/backup-team.github.io/releases/download/v1.0/SHA256SUMS-parts.txt",
+            "content_type": "text/plain; charset=utf-8",
+            "size": 178
+          },
+          {
+            "name": "zynx-1.0-release.z01",
+            "browser_download_url": "https://github.com/matvey14ustinov13-ctrl/backup-team.github.io/releases/download/v1.0/zynx-1.0-release.z01",
+            "content_type": "application/octet-stream",
+            "size": 1363148800
+          },
+          {
+            "name": "zynx-1.0-release.zip",
+            "browser_download_url": "https://github.com/matvey14ustinov13-ctrl/backup-team.github.io/releases/download/v1.0/zynx-1.0-release.zip",
+            "content_type": "application/zip",
+            "size": 1225102399
+          }
+        ]
+      }
+    },
     {
       "name": "future_club",
       "full_name": "matvey14ustinov13-ctrl/future_club",
