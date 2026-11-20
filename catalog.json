@@ -1,6 +1,40 @@
 {
-  "generated_at": "2026-11-19T15:36:12Z",
+  "generated_at": "2026-11-20T00:31:38Z",
   "apps": [
+    {
+      "name": "future_club",
+      "full_name": "matvey14ustinov13-ctrl/future_club",
+      "description": "FastAPI events catalog for Future Club",
+      "html_url": "https://github.com/matvey14ustinov13-ctrl/future_club",
+      "updated_at": "2026-11-19T16:27:33Z",
+      "stargazers_count": 0,
+      "archived": false,
+      "license": {
+        "spdx_id": ""
+      },
+      "topics": [
+        "api",
+        "fastapi",
+        "jinja2",
+        "python"
+      ],
+      "latest_release": {
+        "tag_name": "v1.0.0",
+        "name": "Future Club API v1.0.0",
+        "body": "FastAPI service for the Future Club events catalog. The source archive is attached to this release.",
+        "published_at": "2026-11-19T16:27:36Z",
+        "html_url": "https://github.com/matvey14ustinov13-ctrl/future_club/releases/tag/v1.0.0",
+        "prerelease": false,
+        "assets": [
+          {
+            "name": "future_club.zip",
+            "browser_download_url": "https://github.com/matvey14ustinov13-ctrl/future_club/releases/download/v1.0.0/future_club.zip",
+            "content_type": "application/zip",
+            "size": 5024
+          }
+        ]
+      }
+    },
     {
       "name": "RecoverX",
       "full_name": "matvey14ustinov13-ctrl/RecoverX",
